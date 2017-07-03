@@ -29,22 +29,23 @@
         var link;
         var id = "";
         if(${user.id==0}){
-            id = "管理员";
+            id = "管理员。";
             link = '<a href="<c:url value="/login/admin"/>">${user.username}</a>';
         }
         else if (${user.id==1}){
-            id = "商家";
+            id = "商家。";
             link = '<a href="<c:url value="/login/seller"/>">${user.username}</a>';
         }
         else if (${user.id==2}){
-            id = "买家";
+            id = "买家。";
             link = '<a href="<c:url value="/login/custom"/>">${user.username}</a>';
         }
         else {
-            id = "未知用户";
+            id = "未知用户。";
             link = "${user.username}";
         }
-        str+=(link+"，您的身份是："+id);
+        var logout = '<a href="<c:url value="/login/logout"/>">注销</a>'
+        str+=(link+"，您的身份是："+id+logout);
         var div1 = document.getElementById("tobelog");
         div1.style.display='none';
         document.write(str);

@@ -10,13 +10,15 @@
         <result column="iterm_name" property="iterm_name" />
         <result column="iterm_price" property="iterm_price" />
         <result column="iterm_stock" property="iterm_stock"/>
+        <result column="iterm_info" property="iterm_info"/>
+        <result column="iterm_type" property="iterm_type"/>
     </resultMap>
 
     <select id="searchByName" resultMap="iterm">
         select * from iterms where iterm_name = #{arg0};
     </select>
 
-    <select id="searchone" resultMap="iterm">
+    <select id="searchById" resultMap="iterm">
         select * from iterms where iterm_id = #{iterm_id};
     </select>
 

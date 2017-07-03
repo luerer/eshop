@@ -5,41 +5,18 @@
   Time: 2:32 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+%>--%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <base href="<%=basePath%>">
-
     <title>用户注册</title>
 
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-    <meta http-equiv="description" content="This is my page">
-    <!--
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    -->
-    <style type="text/css">
-        span
-        {
-            color: #CCC;
-        }
-        table
-        {
-            margin-top:10%;
-            margin-left: 40%;
-            margin-right: 40%;
-            margin-bottom: 30%
-        }
-    </style>
 </head>
 
 <body>
@@ -47,4 +24,9 @@
 <hr/>
 <a>注册页面</a>
 </body>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </html>

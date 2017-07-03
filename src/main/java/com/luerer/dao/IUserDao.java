@@ -6,9 +6,14 @@ package com.luerer.dao;
 import com.luerer.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface IUserDao {
 
-    public User search(String name);
+    public User searchByName(String name);
+    public List<User> listall();
+    public void addUser(User user);
+    public void deleteUser(String username);
 
 }

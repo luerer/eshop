@@ -37,7 +37,7 @@ public class ItermControllerTest {
     @Test
     public void oneiterm()
     {
-        Iterm iterm = itermdao.searchone(2);
+        Iterm iterm = itermdao.searchById(2);
         System.out.println(iterm.toString());
     }
 

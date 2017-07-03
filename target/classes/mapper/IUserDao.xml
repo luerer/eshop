@@ -5,7 +5,26 @@
 
 
 <mapper namespace="com.luerer.dao.IUserDao">
-    <select id="search" resultType="com.luerer.model.User">
+    <resultMap id="user" type="User">
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="id" property="id" />
+        <result column="gender" property="gender"/>
+        <result column="address" property="address"/>
+    </resultMap>
+
+    <select id="searchByName" resultMap="user">
         select * from users where username = #{arg0};
     </select>
+
+    <select id="listall" resultMap="user">
+        select * from users;
+    </select>
+
+    <insert id="addUser" parameterType="User"
+        flushCache="true" statementType="PREPARED" timeout="20000">
+    insert into users (id,username,password,address,gender)
+    values (#{id},#{username},#{password},#{address},#{gender});
+    </insert>
+
 </mapper>

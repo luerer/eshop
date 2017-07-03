@@ -34,7 +34,7 @@ public class IndexControllerTest {
     private IUserDao iUserDao;
     @Test
     public void controllerTest(){
-        User user = iUserDao.search("柳二二");
+        User user = iUserDao.searchByName("柳二二");
         System.out.println(user.toString());
     }
 

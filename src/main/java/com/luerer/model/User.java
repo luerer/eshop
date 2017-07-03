@@ -1,16 +1,28 @@
 package com.luerer.model;
 
+import com.sun.istack.internal.NotNull;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by luerer on 28/06/2017.
  */
-@Component
 public class User {
+    @NotNull
     private String username;
+    @NotNull
     private String password;
+    @NotNull
     private int id;
     private String gender;
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public int getId() {
         return id;

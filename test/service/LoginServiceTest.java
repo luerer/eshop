@@ -22,7 +22,7 @@ public class LoginServiceTest {
     IUserDao mapper;
     @Test
     public void login(){
-        User user = mapper.search("陆二二");
+        User user = mapper.searchByName("陆二二");
         System.out.println(user.toString());
         if(user!= null){
             if(user.getUsername().equals("陆二二")&&user.getPassword().equals("a"))

@@ -2,6 +2,7 @@ package com.luerer.controller;
 
 import com.luerer.dao.ItermDao;
 import com.luerer.model.User;
+import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Controller
-@RequestMapping({"/home","/iterms"})
+@RequestMapping("/iterms")
 public class ItermController {
     @Autowired
     private ItermDao itermdao;
     @RequestMapping(method = RequestMethod.GET)
     public String iterms(ModelMap modelMap,
-                         @ModelAttribute User user){
+                         @RequestParam(value = "user", required = false) User user){
         modelMap.put("itermList",itermdao.listall());
         if(user!=null) modelMap.put("user",user);
         return "home";

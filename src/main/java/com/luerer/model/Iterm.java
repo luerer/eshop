@@ -3,13 +3,39 @@ package com.luerer.model;
 /**
  * Created by luerer on 29/06/2017.
  */
+import com.sun.istack.internal.NotNull;
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 public class Iterm {
-
+    @NotNull
     private int iterm_id;
+    @NotNull
     private String iterm_name;
+    @NotNull
     private float iterm_price;
+    @NotNull
     private int iterm_stock;
+    private String iterm_info;
+    @NotNull
+    private String iterm_type;
+
+
+    public String getIterm_info() {
+        return iterm_info;
+    }
+
+    public void setIterm_info(String iterm_info) {
+        this.iterm_info = iterm_info;
+    }
+
+    public String getIterm_type() {
+        return iterm_type;
+    }
+
+    public void setIterm_type(String iterm_type) {
+        this.iterm_type = iterm_type;
+    }
 
     public int getIterm_id() {
         return iterm_id;

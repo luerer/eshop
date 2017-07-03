@@ -16,7 +16,7 @@ public class LoginService {
     @Autowired
     IUserDao mapper;
     public boolean login(String username, String password){
-        User user = mapper.search(username);
+        User user = mapper.searchByName(username);
         if(user!= null){
             if(user.getUsername().equals(username)&&user.getPassword().equals(password))
                 return true;

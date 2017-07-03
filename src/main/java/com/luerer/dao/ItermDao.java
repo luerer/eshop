@@ -12,5 +12,5 @@ import java.util.List;
 public interface ItermDao {
     public List<Iterm> searchByName(String iterm_name);
     public List<Iterm> listall();
-    public Iterm searchone(int iterm_id);
+    public Iterm searchById(int iterm_id);
 }
