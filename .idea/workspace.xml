@@ -1,37 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="795fbd5e-01c1-47eb-85a2-3e5bb50782c1" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/logs/eshop.log" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/luerer/controller/AdminController.class" afterPath="$PROJECT_DIR$/target/classes/com/luerer/controller/AdminController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/luerer/controller/LoginController.class" afterPath="$PROJECT_DIR$/target/classes/com/luerer/controller/LoginController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/com/luerer/controller/AdminController.class" afterPath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/com/luerer/controller/AdminController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/com/luerer/controller/LoginController.class" afterPath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/com/luerer/controller/LoginController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/controller/AdminControllerTest.class" afterPath="$PROJECT_DIR$/target/test-classes/controller/AdminControllerTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/eshop_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/eshop_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop.iml" afterPath="$PROJECT_DIR$/eshop.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/eshop.log.1" afterPath="$PROJECT_DIR$/logs/eshop.log.1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/eshop.log.2" afterPath="$PROJECT_DIR$/logs/eshop.log.2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/luerer/controller/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/com/luerer/controller/AdminController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/luerer/controller/LoginController.java" afterPath="$PROJECT_DIR$/src/main/java/com/luerer/controller/LoginController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/luerer/dao/IUserDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/luerer/dao/IUserDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/mapper/IUserDao.xml" afterPath="$PROJECT_DIR$/src/main/resources/mapper/IUserDao.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-servlet.xml" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/admin_adduser.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/admin_adduser.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/admin_page.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/admin_page.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/fail.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/fail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/mapper/IUserDao.xml" afterPath="$PROJECT_DIR$/target/classes/mapper/IUserDao.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/spring/spring-servlet.xml" afterPath="$PROJECT_DIR$/target/classes/spring/spring-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/mapper/IUserDao.xml" afterPath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/mapper/IUserDao.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/spring/spring-servlet.xml" afterPath="$PROJECT_DIR$/target/eshop/WEB-INF/classes/spring/spring-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/eshop/WEB-INF/view/admin_adduser.jsp" afterPath="$PROJECT_DIR$/target/eshop/WEB-INF/view/admin_adduser.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/eshop/WEB-INF/view/admin_page.jsp" afterPath="$PROJECT_DIR$/target/eshop/WEB-INF/view/admin_page.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/controller/AdminControllerTest.java" afterPath="$PROJECT_DIR$/test/controller/AdminControllerTest.java" />
-    </list>
+    <list default="true" id="795fbd5e-01c1-47eb-85a2-3e5bb50782c1" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -1475,7 +1445,7 @@
       <workItem from="1498820353313" duration="19226000" />
       <workItem from="1498972073788" duration="1494000" />
       <workItem from="1499043376513" duration="26633000" />
-      <workItem from="1499130522636" duration="27858000" />
+      <workItem from="1499130522636" duration="27923000" />
     </task>
     <servers />
   </component>
@@ -1512,7 +1482,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120864000" />
+    <option name="totallyTimeSpent" value="120929000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1547,7 +1517,7 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2041096" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28594506" sideWeight="0.49183673" order="0" side_tool="false" content_ui="combo" />
