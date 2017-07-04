@@ -15,5 +15,6 @@ public interface IUserDao {
     public List<User> listall();
     public void addUser(User user);
     public void deleteUser(String username);
+    public void updateUser(User user);
 
 }

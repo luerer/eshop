@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <html>
-<script type="text/javascript" src="scripts/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript">
 
 </script>
@@ -38,7 +38,7 @@
             <td>账号类型:</td><td><sf:select id="id" path="id">
             <sf:option value="0">管理员</sf:option>
             <sf:option value="1">商家</sf:option>
-            <sf:option value="2">买家</sf:option>
+            <sf:option value="2" selected="selected">买家</sf:option>
             </sf:select></td>
         </tr>
         <tr>

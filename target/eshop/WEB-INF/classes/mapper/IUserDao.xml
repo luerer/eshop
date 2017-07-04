@@ -27,4 +27,13 @@
     values (#{id},#{username},#{password},#{address},#{gender});
     </insert>
 
+    <delete id="deleteUser">
+        DELETE FROM users WHERE username = #{arg0};
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE users SET id=#{id},gender=#{gender},password=#{password},
+        address=#{address} WHERE username=#{username};
+    </update>
+
 </mapper>

@@ -2,6 +2,7 @@ package controller;
 
 import com.luerer.dao.IUserDao;
 import com.luerer.model.User;
+import com.sun.org.apache.bcel.internal.generic.IUSHR;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,10 @@ import static org.mockito.Mockito.mock;
 @ContextConfiguration(locations = {"classpath:spring/spring-*.xml"})
 public class AdminControllerTest {
 
-
+    @Autowired
+    IUserDao iUserDao;
+    @Test
+    public void adminDeleteUser(){
+        iUserDao.deleteUser("二傻");
+    }
 }
