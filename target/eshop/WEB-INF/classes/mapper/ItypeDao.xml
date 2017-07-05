@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luerer.dao.ItypeDao">
+    <resultMap id="type" type="Type">
+        <result column="type_name" property="type_name" />
+        <result column="type_sum" property="type_sum" />
+    </resultMap>
+
+    <select id="sumOfType" resultType="int">
+        select type_sum from typeOfItem where type_name = #{type_name};
+    </select>
+
+    <select id="listAll" resultMap="type">
+        select * from typeOfItem;
+    </select>
+
+</mapper>

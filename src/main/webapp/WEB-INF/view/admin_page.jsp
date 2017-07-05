@@ -38,19 +38,20 @@
         if(window.confirm("确认更新用户 "+username+" 吗？")){
 
             var id = document.getElementById("id_" + username).value;
-            var password = document.getElementById("password_" + username).value;
             var gender = document.getElementById("gender_" + username).value;
             var address = document.getElementById("address_" + username).value;
-            if(password.length == 0){
-                alert("更新的密码不能为空");
+            var phone = document.getElementById("phone_" + username).value;
+            if(phone.length == 0){
+                alert("更新的电话号码不能为空");
                 return;
             }
             var user = {
                 "username":username,
                 "id":id,
                 "gender":gender,
-                "password":password,
+                "phone":phone,
                 "address":address,
+                "password":"1234"
             };
             $.ajax({
                 async: false,
@@ -67,26 +68,29 @@
 
     }
     function addUser() {
-        if(window.confirm("确认添加用户？")){
+        if(window.confirm("确认添加用户?(初始密码：1234)")){
             var username = document.getElementById("username").value;
             var id = 2;
             var gender = document.getElementById("gender").value;
-            var password = document.getElementById("password").value;
+            var phone = document.getElementById("phone").value;
             var address = document.getElementById("address").value;
             if(username.length==0){
                 alert("用户名不能为空");
                 return;
             }
-            if(password.length==0){
-                alert("密码不能为空");
+            if(phone.length!=11){
+                alert("电话必须为11位");
                 return;
             }
+
+
             var user = {
                 "username":username,
                 "id":id,
                 "gender":gender,
-                "password":password,
+                "password":"1234",
                 "address":address,
+                "phone":phone
             };
             $.ajax({
                 async: false,
@@ -108,15 +112,17 @@
     <title>管理员页面</title>
 </head>
 <body>
-<span>管理员：${user.username}，<a href="<c:url value="/login/logout"/>">退出</a></span>
+<span>管理员：${user.username}，<a href="<c:url value="/login/logout"/>">退出</a>,
+    <a href="<c:url value="/home"/>">商城首页</a>
+</span>
 <hr/>
-<a href="<c:url value="/admin/adduser"/>">添加新用户</a><br/>
+<%--<a href="<c:url value="/admin/adduser"/>">添加新用户</a><br/>--%>
 <div id="users">
     <table width="1200" align="center" border="1">
         <tr>
             <td width="200">账号类型</td>
             <td width="200">用户名</td>
-            <td width="200">用户密码</td>
+            <td width="200">电话</td>
             <td width="200">性别</td>
             <td width="200">地址</td>
             <td width="200">操作</td>
@@ -137,7 +143,7 @@
                                 <option value="2" <c:if test="${cur.id==2}"> selected="selected"</c:if>>买家</option>
                             </select></td>
                             <td width="200"><input style="text-align: center;" id ="username_${cur.username}"  name="username" value="${cur.username}" readonly="true"/></td>
-                            <td width="200"><input name="password" id = "password_${cur.username}"/></td>
+                            <td width="200"><input name="phone" id = "phone_${cur.username}" value="${cur.phone}"/></td>
                             <td width="200"><select id="gender_${cur.username}" name="gender">
                                 <option value="男" <c:if test="${cur.gender=='男'}"> selected="selected"</c:if>>男</option>
                                 <option value="女" <c:if test="${cur.gender=='女'}"> selected="selected"</c:if>>女</option>
@@ -156,7 +162,7 @@
         <tr>
             <td><input style="text-align: center;" id ="id"  name="username" value="买家" readonly="true"/></td>
             <td><input id="username" /></td>
-            <td><input id="password" /></td>
+            <td><input id="phone" /></td>
             <td><select id="gender">
                 <option value="男" selected="selected">男</option>
                 <option value="女" selected="selected">女</option>

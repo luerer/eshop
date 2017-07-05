@@ -1,7 +1,7 @@
 package controller;
 
-import com.luerer.dao.ItermDao;
-import com.luerer.model.Iterm;
+import com.luerer.dao.IitemDao;
+import com.luerer.model.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,29 +24,27 @@ import static org.junit.Assert.*;
 public class ItermControllerTest {
 
     @Autowired
-    private ItermDao itermdao;
+    private IitemDao iitemDao;
     @Test
     public void Iterms(){
-        List<Iterm> itermList=itermdao.searchByName("衣服");
-        for(Iterm iterm:itermList)
-            System.out.println(iterm.toString());
+        List<Item> itermList=iitemDao.searchByName("衣服");
+        for(Item item:itermList)
+            System.out.println(item.toString());
     }
 
-    @Autowired
-    private  ItermDao itermDao;
     @Test
     public void oneiterm()
     {
-        Iterm iterm = itermdao.searchById(2);
+        Item iterm = iitemDao.searchById(2);
         System.out.println(iterm.toString());
     }
 
     @Test
     public void listalliterms()
     {
-        List<Iterm> itermList = itermdao.listall();
-        for(Iterm iterm:itermList)
-            System.out.println(iterm.toString());
+        List<Item> itemList = iitemDao.listall();
+        for(Item item:itemList)
+            System.out.println(item.toString());
     }
 
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luerer.dao.IitemDao">
+    <resultMap id="item" type="Item">
+        <result column="item_id" property="item_id" />
+        <result column="item_name" property="item_name" />
+        <result column="item_price" property="item_price" />
+        <result column="item_stock" property="item_stock"/>
+        <result column="item_info" property="item_info"/>
+        <result column="item_type" property="item_type"/>
+        <result column="item_pic" property="item_pic"/>
+    </resultMap>
+
+    <select id="searchByName" resultMap="item">
+        select * from items where item_name = #{arg0};
+    </select>
+
+    <select id="searchById" resultMap="item">
+        select * from items where item_id = #{iterm_id};
+    </select>
+
+    <select id="listall" resultMap="item">
+        select * from items;
+    </select>
+</mapper>

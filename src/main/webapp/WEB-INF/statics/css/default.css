@@ -1,0 +1,13 @@
+div.errors {
+	background-color: #FFCCCC;
+	border: 2px solid red;
+}
+
+div.default {
+	border: 2px solid lawngreen;
+}
+
+.static-brand {
+	white-space: nowrap;
+	color: black;
+}

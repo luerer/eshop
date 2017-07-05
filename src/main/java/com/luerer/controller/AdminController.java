@@ -7,8 +7,11 @@ import com.luerer.model.User;
 import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +23,26 @@ import java.util.Map;
 public class AdminController {
     @Autowired
     IUserDao iUserDao;
-    @RequestMapping("/adduser")
-    public String adminAddUserPage(@ModelAttribute("user") User user){
-        //iUserDao.addUser(user);
-        return "admin_adduser";
-    }
 
-    @RequestMapping(value ="/adduser",method = RequestMethod.POST)
-    public String adminAddUser(User user){
-        iUserDao.addUser(user);
-        return "redirect:/login/admin";
+    @RequestMapping
+    public String login_admin(HttpSession session, ModelMap modelMap){
+        User user = (User) session.getAttribute("user");
+        if(user!=null && user.getId()==0 ){
+            List<User> userList = null;
+            try{
+                userList = iUserDao.listall();
+            }catch (Exception e){
+                return "not_found";
+            }
+            modelMap.put("userList",userList);
+            return "admin_page";
+        }else if(user==null){
+            modelMap.put("errMsg","请先登录！");
+        }else{
+            modelMap.put("errMsg","对不起，您无权限。");
+        }
+        return "not_found";
+
     }
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
@@ -60,7 +73,19 @@ public class AdminController {
             iUserDao.addUser(user);
             return "成功添加用户："+user.getUsername();
         }catch (Exception e){
-            return "更新失败！";
+            return "添加失败！";
         }
+    }
+
+    @RequestMapping("/adduser")
+    public String adminAddUserPage(@ModelAttribute("user") User user){
+        //iUserDao.addUser(user);
+        return "admin_adduser";
+    }
+
+    @RequestMapping(value ="/adduser",method = RequestMethod.POST)
+    public String adminAddUser(User user){
+        iUserDao.addUser(user);
+        return "redirect:/login/admin";
     }
 }

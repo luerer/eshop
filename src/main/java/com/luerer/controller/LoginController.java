@@ -42,21 +42,6 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/admin")
-    public String login_admin(HttpServletRequest request){
-        request.getSession().setAttribute("userList",iUserDao.listall());
-        return "admin_page";
-    }
-
-    @RequestMapping("/seller")
-    public String ligin_seller(){
-        return "seller_iterm";
-    }
-
-    @RequestMapping("/custom")
-    public String ligin_custom(){
-        return "custom_info";
-    }
 
     @RequestMapping("/logout")
     public  String logout(HttpServletRequest request){

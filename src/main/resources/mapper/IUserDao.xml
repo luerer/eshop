@@ -11,6 +11,8 @@
         <result column="id" property="id" />
         <result column="gender" property="gender"/>
         <result column="address" property="address"/>
+        <result column="phone" property="phone"/>
+        <result column="is_default" property="is_default"/>
     </resultMap>
 
     <select id="searchByName" resultMap="user">
@@ -23,8 +25,8 @@
 
     <insert id="addUser" parameterType="User"
         flushCache="true" statementType="PREPARED" timeout="20000">
-    insert into users (id,username,password,address,gender)
-    values (#{id},#{username},#{password},#{address},#{gender});
+    insert into users (id,username,password,address,gender,phone)
+    values (#{id},#{username},#{password},#{address},#{gender},#{phone});
     </insert>
 
     <delete id="deleteUser">
@@ -32,8 +34,12 @@
     </delete>
 
     <update id="updateUser" parameterType="User">
-        UPDATE users SET id=#{id},gender=#{gender},password=#{password},
+        UPDATE users SET id=#{id},gender=#{gender},phone=#{phone},
         address=#{address} WHERE username=#{username};
+    </update>
+
+    <update id="changePassword">
+        UPDATE users SET password=#{password},is_default=0 WHERE username=#{username};
     </update>
 
 </mapper>

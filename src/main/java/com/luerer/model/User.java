@@ -3,10 +3,14 @@ package com.luerer.model;
 import com.sun.istack.internal.NotNull;
 import org.springframework.stereotype.Component;
 
+import static javax.swing.text.StyleConstants.Size;
+
 /**
  * Created by luerer on 28/06/2017.
  */
+@Component
 public class User {
+
     @NotNull
     private String username;
     @NotNull
@@ -14,7 +18,28 @@ public class User {
     @NotNull
     private int id;
     private String gender;
+
     private String address;
+
+    private long phone;
+
+    private boolean is_default;
+
+    public boolean isIs_default() {
+        return is_default;
+    }
+
+    public void setIs_default(boolean is_default) {
+        this.is_default = is_default;
+    }
+
+    public long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(long phone) {
+        this.phone = phone;
+    }
 
     public String getAddress() {
         return address;
