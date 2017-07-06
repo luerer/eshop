@@ -33,7 +33,11 @@
 
     <update id="updateItem">
         UPDATE items SET item_type=#{item_type}, item_name=#{item_name}, item_info=#{item_info},
-        item_pic=#{item_pic}, item_price=#{item_price}, item_stock=#{item_stock} WHERE
+        item_price=#{item_price}, item_stock=#{item_stock} WHERE
         item_id=#{item_id};
-    </update>
+    </update><!--没有加上图片更新-->
+
+    <delete id="deleteItem">
+        DELETE FROM items WHERE item_id=#{item_id};
+    </delete>
 </mapper>

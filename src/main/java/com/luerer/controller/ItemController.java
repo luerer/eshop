@@ -83,12 +83,12 @@ public class ItemController {
         }
         try{
             item.setItem_stock(stock-item_num);
-            type = itypeDao.searchByName(item.getItem_type());
+            /*type = itypeDao.searchByName(item.getItem_type());
             int sum = type.getType_sum();
             if(stock-item_num<=0){
                 type.setType_sum(sum-1);
                 itypeDao.updateType(type);
-            }
+            }*/
             iitemDao.updateItem(item);
             iorderDao.addOrder(custom,item.getItem_id(),item_num);
         }catch (Exception e){

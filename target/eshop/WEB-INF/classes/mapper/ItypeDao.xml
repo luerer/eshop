@@ -28,4 +28,8 @@
         WHERE type_id=#{type_id};
     </update>
 
+    <insert id="addType">
+        INSERT INTO typeOfItem (type_name, type_sum) VALUES (#{type_name},0);
+    </insert>
+
 </mapper>

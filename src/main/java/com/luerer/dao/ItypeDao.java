@@ -15,4 +15,5 @@ public interface ItypeDao {
     public Type searchByName(@Param("type_name") String type_name);
     public String searchById(@Param("type_id") int type_id);
     public void updateType(Type type);
+    public void addType(@Param("type_name") String type_name);
 }

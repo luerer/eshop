@@ -73,7 +73,9 @@
     <ul class="nav nav-tabs">
         <li role="presentation" <c:if test="${default_type==null}"> class="active" </c:if> ><a href="/home" >全部</a></li>
         <c:forEach var="type" items="${typeList}">
+            <c:if test="${type.type_sum>0}">
             <li role="presentation" <c:if test="${default_type==type.type_id}"> class="active" </c:if> ><a href="/item/${type.type_id}">${type.type_name}</a></li>
+            </c:if>
         </c:forEach>
     </ul>
         <div id="items">

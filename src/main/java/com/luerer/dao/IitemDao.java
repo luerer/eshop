@@ -16,4 +16,5 @@ public interface IitemDao {
     public Item searchById(int item_id);
     public List<Item> searchByType(@Param("item_type") String item_type);
     public void updateItem(Item item);
+    public void deleteItem(@Param("item_id") int item_id);
 }

@@ -107,7 +107,7 @@
 </div>
 <hr/>
 <div id="PageBody">
-    <table id="detail-panel">
+    <table id="detail-panel" border="1">
         <tr>
             <td>
                 商品名称：

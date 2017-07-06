@@ -24,6 +24,27 @@
     </style>
 </head>
 <body>
+<script>
+    function deleteItem(item_id) {
+        if(!window.confirm("确定删除商品吗？")){
+            return;
+        }
+        var itemId={
+            "item_id":item_id
+        }
+        $.ajax({
+            async: false,
+            url: '/seller/deleteItem',
+            type: 'POST',
+            data: itemId,
+            scriptCharset: 'utf-8',
+            success: function (message) {
+                alert(message);
+                location.reload(true);
+            }
+        });
+    }
+</script>
 <div class="container" id="tobelog">
     <c:choose>
         <c:when test="${user==null}">
@@ -47,7 +68,39 @@
         </ul>
     </div>
     <div id="MainBody">
-
+        <table id="detail-panel" border="1">
+            <tr>
+                <th>商品种类</th>
+                <th>商品名称</th>
+                <th>商品价格</th>
+                <th>剩余库存</th>
+                <th>详细描述</th>
+                <th>操作</th>
+            </tr>
+            <c:if test="${itemList==null}">
+                <td colspan="6">没有商品信息</td>
+            </c:if>
+            <c:forEach var="item" items="${itemList}">
+                <tr>
+                    <td>${item.item_type}</td>
+                    <td>${item.item_name}</td>
+                    <td>${item.item_price}</td>
+                    <td>${item.item_stock}</td>
+                    <td>${item.item_info}</td>
+                    <td>
+                        <span>
+                            <a href="/seller/updateItem/${item.item_id}">修改商品</a>
+                            <input type="submit" onclick="deleteItem(${item.item_id})" value="删除"/>
+                        </span>
+                    </td>
+                </tr>
+            </c:forEach>
+            <tr>
+                <td colspan="7">
+                    <input type="submit" href="/seller/addItem" value="添加新商品"/>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 
