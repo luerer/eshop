@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luerer.dao.IorderDao">
+    <resultMap id="order" type="Order">
+        <result column="id" property="id" />
+        <result column="custom" property="custom" />
+        <result column="item_id" property="item_id" />
+        <result column="item_num" property="item_num"/>
+        <result column="send" property="send"/>
+        <result column="receive" property="receive"/>
+    </resultMap>
+
+    <select id="listAll" resultMap="order">
+        select * from orders;
+    </select>
+
+    <select id="searchById" resultMap="order">
+        SELECT * FROM orders WHERE id = #{id};
+    </select>
+
+    <select id="searchByCustom" resultType="order">
+        SELECT * FROM orders WHERE custom=#{custom};
+    </select>
+
+    <update id="send">
+        UPDATE orders SET send=TRUE WHERE id=#{id};
+    </update>
+
+    <update id="receive">
+        UPDATE orders SET receive=TRUE WHERE id=#{id};
+    </update>
+
+    <insert id="addOrder">
+        INSERT into orders (custom,item_id,item_num)
+        VALUES (#{custom},#{item_id},#{item_num});
+    </insert>
+</mapper>

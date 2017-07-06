@@ -23,7 +23,7 @@ public class UserController {
     IUserDao iUserDao;
 
     @RequestMapping
-    public String profilepage(HttpSession session,
+    public String profilePage(HttpSession session,
                               ModelMap modelMap){
         User user = (User)session.getAttribute("user");
         if(user!=null) {

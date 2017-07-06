@@ -1,6 +1,7 @@
 package com.luerer.dao;
 
 import com.luerer.model.Type;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,5 +12,7 @@ import java.util.List;
 @Component
 public interface ItypeDao {
     public List<Type> listAll();
-    public int sumOfType(String type_name);
+    public Type searchByName(@Param("type_name") String type_name);
+    public String searchById(@Param("type_id") int type_id);
+    public void updateType(Type type);
 }

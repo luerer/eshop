@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.tools.jconsole.HTMLPane;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,7 +27,7 @@ public class LoginController {
     IUserDao iUserDao;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String logincheck(HttpServletRequest request, ModelMap modelMap,
+    public String logincheck(HttpSession session, ModelMap modelMap,
                              @RequestParam(value = "username", required = false) String username,
                              @RequestParam(value = "password", required = false) String password){
         //String username = request.getParameter("username");
@@ -34,7 +35,7 @@ public class LoginController {
         boolean code = loginservice.login(username,password);
         if(code){
             User user = iUserDao.searchByName(username);
-            request.getSession().setAttribute("user",user);
+            session.setAttribute("user",user);
             return "redirect:/home";
         }else{
             modelMap.put("message","用户名/密码错误！");

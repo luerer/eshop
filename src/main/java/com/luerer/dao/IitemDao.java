@@ -1,6 +1,7 @@
 package com.luerer.dao;
 
 import com.luerer.model.Item;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface IitemDao {
     public List<Item> searchByName(String item_name);
     public List<Item> listall();
     public Item searchById(int item_id);
-    public List<Item> searchByType(String item_type);
+    public List<Item> searchByType(@Param("item_type") String item_type);
+    public void updateItem(Item item);
 }
