@@ -13,4 +13,5 @@ public interface IitemDao {
     public List<Item> searchByName(String item_name);
     public List<Item> listall();
     public Item searchById(int item_id);
+    public List<Item> searchByType(String item_type);
 }

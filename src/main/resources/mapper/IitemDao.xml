@@ -20,10 +20,14 @@
     </select>
 
     <select id="searchById" resultMap="item">
-        select * from items where item_id = #{iterm_id};
+        select * from items where item_id = #{item_id};
     </select>
 
     <select id="listall" resultMap="item">
         select * from items;
+    </select>
+
+    <select id="searchByType" resultMap="item">
+        SELECT * FROM items WHERE item_type = ${item_type};
     </select>
 </mapper>
