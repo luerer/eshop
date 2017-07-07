@@ -72,10 +72,17 @@
             alert("对不起，库存不够");
             return;
         }
+        var password = prompt("确认密码","");
+        var old = "${user.password}";
+        if(old!==password){
+            alert("密码不正确");
+            return;
+        }
         var item_num = {
             "item_num":number,
             "item_id":item_id
         }
+
         $.ajax({
             async: false,
             url: '/item/buy',
@@ -98,7 +105,7 @@
             <a href="<c:url value="/home/register"/>">注册</a>
         </c:when>
         <c:when test="${user!=null}">
-            您好：<a href="/custom">${user.username}</a>,
+            您好：${user.username}</a>,
             <a href="/login/logout">退出</a>|
             <a href="/home">返回首页</a>
         </c:when>

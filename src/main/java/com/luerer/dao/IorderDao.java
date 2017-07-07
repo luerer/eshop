@@ -13,10 +13,11 @@ import java.util.List;
 public interface IorderDao {
     public List<Order> listAll();
     public Order searchById(@Param("id") long id);
-    public Order searchByCustom(@Param("custom") String custom);
+    public List<Order> searchByCustom(@Param("custom") String custom);
     public void send(@Param("id") long id);
     public void receive(@Param("id") long id);
-    public void addOrder(@Param("custom") String custom,
-                       @Param("item_id") int item_id,
-                       @Param("item_num") int item_num);
+    public void addOrder(Order order);
+    public void setStatus(@Param("id") long id,
+                          @Param("status") int status,
+                          @Param("msg") String msg);
 }

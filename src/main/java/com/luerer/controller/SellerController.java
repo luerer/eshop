@@ -59,8 +59,10 @@ public class SellerController {
     @RequestMapping(value = "/order")
     public String sellerOrder(ModelMap modelMap,
                               HttpSession session){
-        List<Order> orderList = null;
+
+        //check user
         User user = (User)session.getAttribute("user");
+        List<Order> orderList=null;
         if(user==null){
             modelMap.put("errMsg","对不起,请登录。");
             return "not_found";
@@ -75,41 +77,49 @@ public class SellerController {
             return "not_found";
         }
 
-        if(orderList==null){
-            modelMap.put("seller_orders", null);
+        if(orderList.size()==0){
+            modelMap.put("orderList", null);
             return "seller_order";
         }else {
-            List seller_orders = new ArrayList();
-            try {
-                for (Order order : orderList) {
-                    Map tmp = new HashMap();
-                    Item item = iitemDao.searchById(order.getItem_id());
-                    User tmp_user = iUserDao.searchByName(order.getCustom());
-                    tmp.put("order_id", order.getId());
-                    tmp.put("order_custom", order.getCustom());
-                    tmp.put("order_item", item.getItem_name());
-                    tmp.put("order_address", tmp_user.getAddress());
-                    tmp.put("order_num", order.getItem_num());
-                    tmp.put("order_status", order.isSend());
-                    seller_orders.add(tmp);
-                }
-            } catch (Exception e) {
-                modelMap.put("errMsg", "加载订单出错");
-                return "not_found";
-            }
-            modelMap.put("seller_orders", seller_orders);
+            modelMap.put("orderList",orderList);
             return "seller_order";
         }
     }
-
+///////
     @RequestMapping(value = "/sendItem",method = RequestMethod.POST)
-    public @ResponseBody String sendItem(@RequestParam("order_id") long order_id){
+    public @ResponseBody String sendItem(@RequestParam("order_id") long order_id,
+                                         @RequestParam("msg") String msg){
         try{
             iorderDao.send(order_id);
+            iorderDao.setStatus(order_id,0,msg);
         }catch (Exception e){
             return "发货出错。。。";
         }
         return "发货成功";
+    }
+
+    @RequestMapping(value = "/rejectItem",method = RequestMethod.POST)
+    public @ResponseBody String rejectItem(@RequestParam("order_id") long order_id,
+                                           @RequestParam("msg") String msg){
+        try{
+            iorderDao.setStatus(order_id,1,msg);
+        }catch (Exception e){
+            return "订单出错。";
+        }
+        return "已拒绝。";
+    }
+
+    @RequestMapping(value = "/confirmReturn",method = RequestMethod.POST)
+    public @ResponseBody String confirmReturn(@RequestParam("order_id") long order_id){
+        Order order = iorderDao.searchById(order_id);
+        if(order.getStatus()!=2)
+            return "订单出错。";
+        try{
+            iorderDao.setStatus(order_id,4,"退款成功");
+        }catch (Exception e){
+            return "订单出错。";
+        }
+        return "已同意退款";
     }
 
     @RequestMapping(value = "/deleteItem")
@@ -184,6 +194,24 @@ public class SellerController {
     @RequestMapping(value = "/addItem")
     public String addItem(){
         return "seller_addItem";
+    }
+
+    @RequestMapping(value = "/addConfirm")
+    public @ResponseBody String addConfirm(Item item){
+        if(item==null){
+            return "添加商品失败。";
+        }
+        String item_type = item.getItem_type();
+        try{
+            Type type = itypeDao.searchByName(item_type);
+            int sum = type.getType_sum();
+            type.setType_sum(sum+1);
+            itypeDao.updateType(type);
+            iitemDao.addItem(item);
+        }catch (Exception e){
+            return "添加失败。";
+        }
+        return "添加"+item_type+"："+item.getItem_name()+"成功。";
     }
 
 

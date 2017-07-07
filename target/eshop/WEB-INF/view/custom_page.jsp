@@ -88,7 +88,9 @@
     <title>个人主页</title>
 </head>
 <body>
-<span>买家：${user.username}，<a href="<c:url value="/login/logout"/>">退出</a></span>
+您好：<a href="/custom">${user.username}</a>,
+<a href="/login/logout">退出</a>|
+<a href="/home">返回首页</a>
 <hr/>
 
 <div id="PageBody">
@@ -97,7 +99,6 @@
             <li role="presentation" class="active"><a href="/custom">个人信息</a></li>
             <li role="presentation"><a href="/custom/order">订单查看</a></li>
             <li role="presentation"><a href="/custom/caret">购物车</a></li>
-            <li role="presentation"><a href="/home">返回商城</a></li>
         </ul>
     </div>
     <div id="MainBody">

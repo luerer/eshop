@@ -7,11 +7,18 @@
 <mapper namespace="com.luerer.dao.IorderDao">
     <resultMap id="order" type="Order">
         <result column="id" property="id" />
-        <result column="custom" property="custom" />
-        <result column="item_id" property="item_id" />
+        <result column="custom_name" property="custom_name" />
+        <result column="custom_address" property="custom_address" />
+        <result column="custom_phone" property="custom_phone"/>
+        <result column="item_name" property="item_name"/>
+        <result column="item_type" property="item_type"/>
+        <result column="item_price" property="item_price"/>
         <result column="item_num" property="item_num"/>
         <result column="send" property="send"/>
         <result column="receive" property="receive"/>
+        <result column="time" property="time"/>
+        <result column="msg" property="msg"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <select id="listAll" resultMap="order">
@@ -22,8 +29,8 @@
         SELECT * FROM orders WHERE id = #{id};
     </select>
 
-    <select id="searchByCustom" resultType="order">
-        SELECT * FROM orders WHERE custom=#{custom};
+    <select id="searchByCustom" resultMap="order">
+        SELECT * FROM orders WHERE custom_name=#{custom};
     </select>
 
     <update id="send">
@@ -34,8 +41,12 @@
         UPDATE orders SET receive=TRUE WHERE id=#{id};
     </update>
 
-    <insert id="addOrder">
-        INSERT into orders (custom,item_id,item_num)
-        VALUES (#{custom},#{item_id},#{item_num});
+    <insert id="addOrder" parameterType="Order">
+        INSERT into orders (custom_name,custom_address,custom_phone,item_name,item_type,item_price,item_num)
+        VALUES (#{custom_name},#{custom_address},#{custom_phone},#{item_name},#{item_type},#{item_price},#{item_num});
     </insert>
+
+    <update id="setStatus">
+        UPDATE orders SET status=#{status},msg=#{msg} WHERE id=#{id};
+    </update>
 </mapper>

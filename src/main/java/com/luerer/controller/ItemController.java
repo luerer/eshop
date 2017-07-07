@@ -4,6 +4,7 @@ import com.luerer.dao.IitemDao;
 import com.luerer.dao.IorderDao;
 import com.luerer.dao.ItypeDao;
 import com.luerer.model.Item;
+import com.luerer.model.Order;
 import com.luerer.model.Type;
 import com.luerer.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,12 @@ public class ItemController {
                                         @RequestParam(value = "item_id",required = false) int item_id,
                                         HttpSession session){
         User user = (User)session.getAttribute("user");
-        String custom = user.getUsername();
+        //String custom = user.getUsername();
         Item item = null;
         Type type = null;
+        if(user==null){
+            return "用户未登录。";
+        }
         try{
             item = iitemDao.searchById(item_id);
 
@@ -81,16 +85,20 @@ public class ItemController {
         if(stock<item_num){
             return "对不起，商品库存不足。";
         }
+
         try{
             item.setItem_stock(stock-item_num);
-            /*type = itypeDao.searchByName(item.getItem_type());
-            int sum = type.getType_sum();
-            if(stock-item_num<=0){
-                type.setType_sum(sum-1);
-                itypeDao.updateType(type);
-            }*/
             iitemDao.updateItem(item);
-            iorderDao.addOrder(custom,item.getItem_id(),item_num);
+            //order
+            Order order = new Order();
+            order.setCustom_name(user.getUsername());
+            order.setCustom_address(user.getAddress());
+            order.setCustom_phone(user.getPhone());
+            order.setItem_name(item.getItem_name());
+            order.setItem_type(item.getItem_type());
+            order.setItem_price(item.getItem_price());
+            order.setItem_num(item_num);
+            iorderDao.addOrder(order);
         }catch (Exception e){
             return "购买出错";
         }

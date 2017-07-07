@@ -13,11 +13,7 @@
 </head>
 <body>
 404
-<script>
-    if(${errMsg!=null}){
-        alert(${errMsg});
-    }
-</script>
+${errMsg}
 </body>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 

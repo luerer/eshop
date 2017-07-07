@@ -1,6 +1,10 @@
 package com.luerer.controller;
 
 import com.luerer.dao.IUserDao;
+import com.luerer.dao.IitemDao;
+import com.luerer.dao.IorderDao;
+import com.luerer.model.Item;
+import com.luerer.model.Order;
 import com.luerer.model.User;
 import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by luerer on 05/07/2017.
@@ -21,15 +29,25 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     IUserDao iUserDao;
+    @Autowired
+    IorderDao iorderDao;
+    @Autowired
+    IitemDao iitemDao;
 
     @RequestMapping
     public String profilePage(HttpSession session,
                               ModelMap modelMap){
         User user = (User)session.getAttribute("user");
         if(user!=null) {
-            String username = user.getUsername();
-            modelMap.put("username",username);
+            if(user.getId()!=2){
+                modelMap.put("errMsg","对不起，身份不正确。");
+                return "not_found";
+            }else{
+                modelMap.put("username", user.getUsername());
+            }
+
         }else{
+            modelMap.put("errMsg","对不起，请先登录。");
             return "not_found";
         }
         return "custom_page";
@@ -75,5 +93,48 @@ public class UserController {
         return "修改密码成功，请重新登录。";
     }
 
+    @RequestMapping(value = "/order")
+    public String customOrder(HttpSession session,
+                              ModelMap modelMap){
+        List<Order> orderList = null;
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            modelMap.put("errMsg","对不起,请登录。");
+            return "not_found";
+        }else if(user.getId()!=2){
+            modelMap.put("errMsg","对不起,您不是买家。");
+            return "not_found";
+        }
+        try{
+            orderList = iorderDao.searchByCustom(user.getUsername());
+        }catch (Exception e){
+            modelMap.put("errMsg","查询订单出错。");
+            return "not_found";
+        }
+        modelMap.put("orderList", orderList);
+        return "custom_order";
 
+
+    }
+
+    @RequestMapping(value = "/receiveItem",method = RequestMethod.POST)
+    public @ResponseBody String receiveItem(@RequestParam("order_id") long order_id){
+        try{
+            iorderDao.receive(order_id);
+        }catch (Exception e){
+            return "收货出错。。。";
+        }
+        return "收货成功";
+    }
+
+    @RequestMapping(value = "/returnItem",method = RequestMethod.POST)
+    public @ResponseBody String returnItem(@RequestParam("order_id") long order_id,
+                                           @RequestParam("msg") String msg){
+        try{
+            iorderDao.setStatus(order_id,2,msg);
+        }catch (Exception e){
+            return "申请退款出错。";
+        }
+        return "申请退款成功";
+    }
 }

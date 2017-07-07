@@ -16,7 +16,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title>商家页面</title>
+    <title>买家页面</title>
     <style type="text/css">
         #PageBody{width:100%;}
         #Sidebar{float:left;width:10%;}
@@ -25,58 +25,8 @@
 </head>
 <body>
 <script>
-    function sendItem(order_id) {
-        var msg = prompt("请输入快递单号","")
-        if(isNaN(msg))
-        {
-            alert("请输入有效快递单号");
-            return;
-        }
-        if(!window.confirm("确认发货？单号："+msg)){
-            return;
-        }
-        var order={
-            "order_id":order_id,
-            "msg":msg
-        };
-        $.ajax({
-            async: false,
-            url: '/seller/sendItem',
-            type: 'POST',
-            data: order,
-            scriptCharset: 'utf-8',
-            success: function (message) {
-                alert(message);
-                location.reload(true);
-            }
-        });
-    }
-    function rejectItem(order_id) {
-        var msg = prompt("请输入原因","");
-        if(msg==null){
-            alert("原因不能为空");
-        }
-        if(!window.confirm("确认拒绝订单，原因："+msg)){
-            return;
-        }
-        var reject_info={
-            "order_id":order_id,
-            "msg":msg
-        };
-        $.ajax({
-            async: false,
-            url: '/seller/rejectItem',
-            type: 'POST',
-            data: reject_info,
-            scriptCharset: 'utf-8',
-            success: function (message) {
-                alert(message);
-                location.reload(true);
-            }
-        });
-    }
-    function confirmReturn(order_id) {
-        if(!window.confirm("同意退款？")){
+    function receiveItem(order_id) {
+        if(!window.confirm("确认收货？")){
             return;
         }
         var password = prompt("确认密码","");
@@ -87,10 +37,10 @@
         }
         var order={
             "order_id":order_id
-        };
+        }
         $.ajax({
             async: false,
-            url: '/seller/confirmReturn',
+            url: '/custom/receiveItem',
             type: 'POST',
             data: order,
             scriptCharset: 'utf-8',
@@ -99,8 +49,34 @@
                 location.reload(true);
             }
         });
-
     }
+
+    function returnItem(order_id) {
+        if(!window.confirm("确认申请退款？")){
+            return;
+        }
+        var msg = prompt("填写退款理由");
+        if(msg==null){
+            alert("理由不能为空。");
+            return;
+        }
+        var order={
+            "order_id":order_id,
+            "msg":msg
+        };
+        $.ajax({
+            async: false,
+            url: '/custom/returnItem',
+            type: 'POST',
+            data: order,
+            scriptCharset: 'utf-8',
+            success: function (message) {
+                alert(message);
+                location.reload(true);
+            }
+        });
+    }
+
 </script>
 <div class="container" id="tobelog">
     <c:choose>
@@ -109,7 +85,7 @@
             <a href="<c:url value="/home/register"/>">注册</a>
         </c:when>
         <c:when test="${user!=null}">
-            您好：<a href="/seller">${user.username}</a>,
+            您好：<a href="/custom">${user.username}</a>,
             <a href="/login/logout">退出</a>|
             <a href="/home">返回首页</a>
         </c:when>
@@ -120,8 +96,9 @@
 <div id="PageBody">
     <div id ="Sidebar">
         <ul class="nav nav-tabs">
-            <li role="presentation"><a href="/seller">商品管理</a></li>
-            <li role="presentation" class="active"><a href="/seller/order">订单管理</a></li>
+            <li role="presentation"><a href="/custom">个人信息</a></li>
+            <li role="presentation" class="active"><a href="/custom/order">订单查看</a></li>
+            <li role="presentation"><a href="/custom/caret">购物车</a></li>
         </ul>
     </div>
     <div id="MainBody">
@@ -158,22 +135,26 @@
                             <c:when test="${order.status==0}">
                                 <c:choose>
                                     <c:when test="${order.send==false}">
-                                        <input type="submit" onclick="sendItem(${order.id})" value="发货"/>
-                                        <input type="submit" onclick="rejectItem(${order.id})" value="拒绝"/>
+                                        <input type="button" disabled="disabled" value="等待发货" />
                                     </c:when>
                                     <c:when test="${order.send==true}">
-                                        <input type="button" disabled="disabled" value="已发货"/>
-                                        <c:if test="${order.receive==true}">
-                                            <input type="button" disabled="disabled" value="已收货"/>
-                                        </c:if>
+                                        <c:choose>
+                                            <c:when test="${order.receive==false}">
+                                                <input type="submit" onclick="receiveItem(${order.id})" value="确认收货"/>
+                                                <input type="submit" onclick="returnItem(${order.id})" value="申请退款" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="button" disabled="disabled" value="已收货"/>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:when>
                                 </c:choose>
                             </c:when>
                             <c:when test="${order.status==1}">
-                                <input type="button" disabled="disabled" value="已拒绝" />
+                                <input type="button" disabled="disabled" value="订单被取消" />
                             </c:when>
                             <c:when test="${order.status==2}">
-                                <input type="submit" onclick="confirmReturn(${order.id})" value="同意退款"/>
+                                <input type="button" disabled="disabled" value="卖家正在处理"/>
                             </c:when>
                             <c:otherwise>
                                 <input type="button" value="订单已关闭" disabled="disabled"/>
@@ -187,10 +168,10 @@
                                 <c:if test="${order.send==true}">快递：${order.msg}</c:if>
                             </c:when>
                             <c:when test="${order.status==1}">
-                                已拒绝，原因：${order.msg}
+                                卖家取消订单，原因：${order.msg}
                             </c:when>
                             <c:when test="${order.status==2}">
-                                买家申请退款，理由：${order.msg}
+                                已经申请退款，理由：${order.msg}
                             </c:when>
                             <c:otherwise>
                                 订单已关闭。${order.msg}

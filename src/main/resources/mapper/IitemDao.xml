@@ -40,4 +40,9 @@
     <delete id="deleteItem">
         DELETE FROM items WHERE item_id=#{item_id};
     </delete>
+
+    <insert id="addItem" parameterType="Item">
+        INSERT INTO items (item_name, item_price, item_stock, item_info, item_type)
+        VALUES (#{item_name},#{item_price},#{item_stock},#{item_info},#{item_type});
+    </insert>
 </mapper>

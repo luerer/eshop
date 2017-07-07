@@ -89,7 +89,7 @@
                     <td>${item.item_info}</td>
                     <td>
                         <span>
-                            <a href="/seller/updateItem/${item.item_id}">修改商品</a>
+                            <button onclick="location.href='/seller/updateItem/${item.item_id}'"  class="btn">修改商品</button>
                             <input type="submit" onclick="deleteItem(${item.item_id})" value="删除"/>
                         </span>
                     </td>
@@ -97,7 +97,7 @@
             </c:forEach>
             <tr>
                 <td colspan="7">
-                    <input type="submit" href="/seller/addItem" value="添加新商品"/>
+                    <button onclick="location.href='/seller/addItem'"  class="btn">添加新商品</button>
                 </td>
             </tr>
         </table>

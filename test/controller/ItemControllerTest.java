@@ -72,7 +72,6 @@ public class ItemControllerTest {
         type.setType_sum(sum-item_num);
         iitemDao.updateItem(item);
         itypeDao.updateType(type);
-        iorderDao.addOrder(custom,item.getItem_id(),item_num);
 
 
     }

@@ -26,15 +26,71 @@
 <body>
 <script>
     function sendItem(order_id) {
-        if(!window.confirm("确认发货？")){
+        var msg = prompt("请输入快递单号","")
+        if(isNaN(msg))
+        {
+            alert("请输入有效快递单号");
+            return;
+        }
+        if(!window.confirm("确认发货？单号："+msg)){
+            return;
+        }
+        var order={
+            "order_id":order_id,
+            "msg":msg
+        };
+        $.ajax({
+            async: false,
+            url: '/seller/sendItem',
+            type: 'POST',
+            data: order,
+            scriptCharset: 'utf-8',
+            success: function (message) {
+                alert(message);
+                location.reload(true);
+            }
+        });
+    }
+    function rejectItem(order_id) {
+        var msg = prompt("请输入原因","");
+        if(msg==null){
+            alert("原因不能为空");
+        }
+        if(!window.confirm("确认拒绝订单，原因："+msg)){
+            return;
+        }
+        var reject_info={
+            "order_id":order_id,
+            "msg":msg
+        };
+        $.ajax({
+            async: false,
+            url: '/seller/rejectItem',
+            type: 'POST',
+            data: reject_info,
+            scriptCharset: 'utf-8',
+            success: function (message) {
+                alert(message);
+                location.reload(true);
+            }
+        });
+    }
+    function confirmReturn(order_id) {
+        if(!window.confirm("同意退款？")){
+            return;
+        }
+        var password = prompt("确认密码","");
+        var old = "${user.password}";
+        if(old!==password){
+            alert("密码不正确");
             return;
         }
         var order={
             "order_id":order_id
-        }
+        };
         $.ajax({
             async: false,
-            url: '/seller/sendItem',
+            url: '/seller/confirmReturn',
             type: 'POST',
             data: order,
             scriptCharset: 'utf-8',
@@ -53,7 +109,7 @@
             <a href="<c:url value="/home/register"/>">注册</a>
         </c:when>
         <c:when test="${user!=null}">
-            您好：<a href="/custom">${user.username}</a>,
+            您好：<a href="/seller">${user.username}</a>,
             <a href="/login/logout">退出</a>|
             <a href="/home">返回首页</a>
         </c:when>
@@ -65,36 +121,79 @@
     <div id ="Sidebar">
         <ul class="nav nav-tabs">
             <li role="presentation"><a href="/seller">商品管理</a></li>
-            <li role="presentation" class="active"><a href="seller/order">订单管理</a></li>
+            <li role="presentation" class="active"><a href="/seller/order">订单管理</a></li>
         </ul>
     </div>
     <div id="MainBody">
         <table id="orders" align="center" border="1">
             <tr>
                 <th>订单号</th>
+                <th>商品种类</th>
                 <th>商品名称</th>
-                <th>买家名字</th>
+                <th>商品单价</th>
                 <th>购买数量</th>
+                <th>收货人</th>
+                <th>联系电话</th>
                 <th>收货地址</th>
+                <th>订单时间</th>
                 <th>状态</th>
+                <th>备注</th>
             </tr>
-            <c:if test="${seller_orders==null}">
-                <td colspan="6">没有订单信息</td>
+            <c:if test="${orderList==null}">
+                <td colspan="11">没有订单信息</td>
             </c:if>
-            <c:forEach var="seller_order" items="${seller_orders}">
+            <c:forEach var="order" items="${orderList}">
                 <tr>
-                    <td>${seller_order.order_id}</td>
-                    <td>${seller_order.order_item}</td>
-                    <td>${seller_order.order_custom}</td>
-                    <td>${seller_order.order_num}</td>
-                    <td>${seller_order.order_address}</td>
+                    <td>${order.id}</td>
+                    <td>${order.item_type}</td>
+                    <td>${order.item_name}</td>
+                    <td>${order.item_price}</td>
+                    <td>${order.item_num}</td>
+                    <td>${order.custom_name}</td>
+                    <td>${order.custom_phone}</td>
+                    <td>${order.custom_address}</td>
+                    <td>${order.time}</td>
                     <td>
                         <c:choose>
-                            <c:when test="${seller_order.order_status==false}">
-                                <input type="submit" onclick="sendItem(${seller_order.order_id})" value="发货"/>
+                            <c:when test="${order.status==0}">
+                                <c:choose>
+                                    <c:when test="${order.send==false}">
+                                        <input type="submit" onclick="sendItem(${order.id})" value="发货"/>
+                                        <input type="submit" onclick="rejectItem(${order.id})" value="拒绝"/>
+                                    </c:when>
+                                    <c:when test="${order.send==true}">
+                                        <input type="button" disabled="disabled" value="已发货"/>
+                                        <c:if test="${order.receive==true}">
+                                            <input type="button" disabled="disabled" value="已收货"/>
+                                        </c:if>
+                                    </c:when>
+                                </c:choose>
+                            </c:when>
+                            <c:when test="${order.status==1}">
+                                <input type="button" disabled="disabled" value="已拒绝" />
+                            </c:when>
+                            <c:when test="${order.status==2}">
+                                <input type="submit" onclick="confirmReturn(${order.id})" value="同意退款"/>
                             </c:when>
                             <c:otherwise>
-                                <input type="submit" value="已发货" disabled="disabled"/>
+                                <input type="button" value="订单已关闭" disabled="disabled"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${order.status==0}">
+                                订单正常。
+                                <c:if test="${order.send==true}">快递：${order.msg}</c:if>
+                            </c:when>
+                            <c:when test="${order.status==1}">
+                                已拒绝，原因：${order.msg}
+                            </c:when>
+                            <c:when test="${order.status==2}">
+                                买家申请退款，理由：${order.msg}
+                            </c:when>
+                            <c:otherwise>
+                                订单已关闭。${order.msg}
                             </c:otherwise>
                         </c:choose>
                     </td>
