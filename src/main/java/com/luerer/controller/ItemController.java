@@ -71,7 +71,6 @@ public class ItemController {
         User user = (User)session.getAttribute("user");
         //String custom = user.getUsername();
         Item item = null;
-        Type type = null;
         if(user==null){
             return "用户未登录。";
         }

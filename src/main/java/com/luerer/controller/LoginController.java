@@ -1,6 +1,7 @@
 package com.luerer.controller;
 
 import com.luerer.dao.IUserDao;
+import com.luerer.model.Order;
 import com.luerer.model.User;
 import com.luerer.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import sun.tools.jconsole.HTMLPane;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by luerer on 29/06/2017.
@@ -36,6 +39,7 @@ public class LoginController {
         if(code){
             User user = iUserDao.searchByName(username);
             session.setAttribute("user",user);
+            session.setAttribute("cartList",null);
             return "redirect:/home";
         }else{
             modelMap.put("message","用户名/密码错误！");
@@ -47,7 +51,7 @@ public class LoginController {
     @RequestMapping("/logout")
     public  String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
-        session.setAttribute("user",null);
+        session.invalidate();
         return "redirect:/home";
     }
 

@@ -79,7 +79,10 @@
         if(!window.confirm("同意退款？")){
             return;
         }
-        var password = prompt("确认密码","");
+        var password;
+        if(!(password = prompt("确认密码",""))){
+            return;
+        }
         var old = "${user.password}";
         if(old!==password){
             alert("密码不正确");

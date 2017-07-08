@@ -31,25 +31,25 @@
         //获得文本框对象
         var t = $("#text_box");
         //初始化数量为1,并失效减
-        $('#min').attr('disabled',true);
+        $("#min").attr('disabled',true);
         //数量增加操作
         $("#add").click(function(){
             t.val(parseInt(t.val())+1)
             if (parseInt(t.val())!=1){
-                $('#min').attr('disabled',false);
+                $("#min").attr('disabled',false);
             }
             if(parseInt(t.val())==${item.item_stock}){
-                $('#add').attr('disabled',true);
+                $("#add").attr('disabled',true);
             }
         })
         //数量减少操作
         $("#min").click(function(){
             t.val(parseInt(t.val())-1);
             if (parseInt(t.val())==1){
-                $('#min').attr('disabled',true);
+                $("#min").attr('disabled',true);
             }
             if(parseInt(t.val())!=${item.item_stock}){
-                $('#add').attr('disabled',false);
+                $("#add").attr('disabled',false);
             }
 
         })
@@ -72,7 +72,10 @@
             alert("对不起，库存不够");
             return;
         }
-        var password = prompt("确认密码","");
+        var password;
+        if(!(password = prompt("确认密码",""))){
+            return;
+        }
         var old = "${user.password}";
         if(old!==password){
             alert("密码不正确");
@@ -86,6 +89,41 @@
         $.ajax({
             async: false,
             url: '/item/buy',
+            type: 'POST',
+            data: item_num,
+            scriptCharset: 'utf-8',
+            success: function (message) {
+                alert(message);
+                location.reload(true);
+            }
+        });
+    }
+    
+    function addCartItem() {
+        var number = document.getElementById("text_box").value;
+        var stock = ${item.item_stock};
+        var item_id = ${item.item_id};
+        if(${user.username==null}){
+            alert("请先登录。");
+            return;
+        }
+        if(${user.id!=2}){
+            alert("对不起，您不是买家。");
+            return;
+        }
+        if(number>stock){
+            alert("对不起，库存不够");
+            return;
+        }
+
+        var item_num = {
+            "item_num":number,
+            "item_id":item_id
+        }
+
+        $.ajax({
+            async: false,
+            url: '/custom/addCartItem',
             type: 'POST',
             data: item_num,
             scriptCharset: 'utf-8',
@@ -165,18 +203,17 @@
         </tr>
         <tr>
             <td>
-                <input type="submit" onclick="buyItem()" value="购买：" <c:if test="${item.item_stock==0}">disabled="disabled"</c:if>/>
+                <input type="submit" onclick="buyItem()" value="购买" <c:if test="${item.item_stock==0}">disabled="disabled"</c:if>/>
+                <input type="submit" onclick="addCartItem()" value="加入购物车" <c:if test="${item.item_stock==0}">disabled="disabled"</c:if>/>
             </td>
             <td>
                 <span>
-                <input id="min" name="" type="button" value="-" />
-                <input id="text_box" name="" type="text" value="1" style="width:30px;"/>
-                <input id="add" name="" type="button" value="+" />
+                <input id="min" name="min" type="button" value="-" />
+                <input id="text_box" name="text_box" type="text" value="1" style="width:30px;"/>
+                <input id="add" name="add" type="button" value="+" />
                 </span>
             </td>
         </tr>
-
-
     </table>
 
 </div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luerer.dao.IcartDao">
+    <resultMap id="cart" type="Cart">
+        <result column="id" property="id" />
+        <result column="custom_name" property="custom_name" />
+        <result column="item_id" property="item_id" />
+        <result column="item_name" property="item_name"/>
+        <result column="item_price" property="item_price"/>
+        <result column="item_num" property="item_num"/>
+        <result column="state" property="state"/>
+    </resultMap>
+
+    <select id="searchByCustom" resultMap="cart">
+        select * from cart WHERE custom_name=#{custom_name};
+    </select>
+
+    <delete id="confirmCart">
+        DELETE FROM cart WHERE custom_name=#{custom_name};
+    </delete>
+
+
+    <insert id="addCart" parameterType="Order">
+        INSERT INTO cart (custom_name, item_id, item_name, item_price, item_num) VALUES
+        (#{custom_name},#{item_id},#{item_name},#{item_price},#{item_num});
+    </insert>
+
+    <delete id="deleteCart">
+        DELETE FROM cart WHERE custom_name=#{custom_name} AND item_id=#{item_id};
+    </delete>
+</mapper>

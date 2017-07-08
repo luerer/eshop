@@ -98,7 +98,7 @@
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="/custom">个人信息</a></li>
             <li role="presentation"><a href="/custom/order">订单查看</a></li>
-            <li role="presentation"><a href="/custom/caret">购物车</a></li>
+            <li role="presentation"><a href="/custom/cart">购物车</a></li>
         </ul>
     </div>
     <div id="MainBody">

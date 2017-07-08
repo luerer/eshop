@@ -52,43 +52,6 @@
     </table>
 </form>
 
-<%--<script type="text/javascript">
-        $(document).ready(function() {
-            $("#login").click(function() {
-                var username = $("#username").val();
-                var password = $("#password").val();
-                var user = {
-                    number : username,
-                    password : password
-                };//拼装成json格式
-
-                $.ajax({
-                    type : "POST",
-                    url : "http://localhost:8080/home/login",
-                    data : JSON.stringify(user),
-                    contentType : 'application/json;charset=utf-8',
-                    dataType : 'json',
-                    success : function(data) {
-
-                        if (data.code == '0') {
-                            window.location.href = "/iswust2hand/index.jsp";
-                            alert("欢迎使用西科二手平台！");
-                        }else{
-                            alert("密码错误，请确认后重新登录！");
-                        }
-
-                    },
-
-                    error : function(data) {
-                        alert("出错：" + data.code);
-                    }
-
-                });
-
-            });
-        });
-
-</script>--%>
 </body>
 
 </html>
