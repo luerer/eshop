@@ -33,7 +33,7 @@
 
     <update id="updateItem">
         UPDATE items SET item_type=#{item_type}, item_name=#{item_name}, item_info=#{item_info},
-        item_price=#{item_price}, item_stock=#{item_stock} WHERE
+        item_price=#{item_price}, item_stock=#{item_stock}, item_pic=#{item_pic} WHERE
         item_id=#{item_id};
     </update><!--没有加上图片更新-->
 
@@ -42,7 +42,7 @@
     </delete>
 
     <insert id="addItem" parameterType="Item">
-        INSERT INTO items (item_name, item_price, item_stock, item_info, item_type)
-        VALUES (#{item_name},#{item_price},#{item_stock},#{item_info},#{item_type});
+        INSERT INTO items (item_name, item_price, item_stock, item_info, item_type,item_pic)
+        VALUES (#{item_name},#{item_price},#{item_stock},#{item_info},#{item_type},#{item_pic});
     </insert>
 </mapper>

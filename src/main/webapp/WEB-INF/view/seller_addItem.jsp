@@ -37,55 +37,28 @@
 
     }
 
-    function addItem() {
-        var item_name = document.getElementById("name_").value;
-        var item_price = document.getElementById("price_").value;
-        var item_stock = document.getElementById("stock_").value;
-        var item_info = document.getElementById("info_").value;
-        var item_type = document.getElementById("type_").value;
 
-        var item={
-            "item_name":item_name,
-            "item_price":item_price,
-            "item_stock":item_stock,
-            "item_info":item_info,
-            "item_type":item_type,
-        };
-        $.ajax({
-            async: false,
-            url: '/seller/addConfirm',
-            type: 'POST',
-            data: item,
-            scriptCharset: 'utf-8',
-            success: function (message) {
-                alert(message);
-                location.reload(true);
-            }
-        });
-
-
-    }
 </script>
 添加商品|<a href="/seller">返回</a>
 <hr/>
-
+<form enctype="multipart/form-data" id="addConfirm" method="post" action="/seller/addConfirm">
 <table id="detail-panel" border="1">
     <tr>
         <td>商品名称：</td>
         <td>
-            <input style="text-align: center;" id ="name_"  name="item_name"  />
+            <input style="text-align: center;" id ="item_name"  name="item_name"  />
         </td>
     </tr>
     <tr>
         <td>商品展示：</td>
         <td>
-            <button id="pic_" value="添加图片" />
+            <input id="pic_info" name="pic_info" type="file" />
         </td>
     </tr>
     <tr>
         <td>商品类别：</td>
         <td><span>
-            <select id="type_" name="item_type">
+            <select id="item_type" name="item_type">
                 <c:forEach var="type" items="${typeList}">
                     <option value="${type.type_name}" >${type.type_name}</option>
                 </c:forEach>
@@ -98,30 +71,29 @@
     <tr>
         <td>商品描述：</td>
         <td>
-            <input style="text-align: center;" id ="info_"  name="item_info"  />
+            <input style="text-align: center;" id ="item_info"  name="item_info"  />
         </td>
     </tr>
     <tr>
         <td>商品价格：</td>
         <td>
-            <input style="text-align: center;" id="price_" name="item_price" />
+            <input style="text-align: center;" id="item_price" name="item_price" />
         </td>
     </tr>
     <tr>
         <td>商品库存：</td>
         <td>
-            <input style="text-align: center;" id ="stock_"  name="item_stock"  />
+            <input style="text-align: center;" id ="item_stock"  name="item_stock"  />
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <input type="submit" onclick="addItem()" value="添加商品" />
+            <input type="submit" value="添加商品" />
         </td>
     </tr>
 
 </table>
-
-
+</form>
 </body>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 

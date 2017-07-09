@@ -1,7 +1,14 @@
 package com.luerer.model;
 
-import com.sun.istack.internal.NotNull;
+
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import static javax.swing.text.StyleConstants.Size;
 
@@ -12,6 +19,7 @@ import static javax.swing.text.StyleConstants.Size;
 public class User {
 
     @NotNull
+    @Pattern(regexp = "[(a-zA-Z0-9_)]*",message = "用户名含有不支持的字符")
     private String username;
     @NotNull
     private String password;
@@ -20,7 +28,7 @@ public class User {
     private String gender;
 
     private String address;
-
+    @NotNull
     private long phone;
 
     private boolean is_default;

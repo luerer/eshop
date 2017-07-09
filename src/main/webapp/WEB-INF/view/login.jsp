@@ -28,30 +28,20 @@
 <body>
 <h2 align="center">用户登录</h2>
 <hr/>
-<form action="/login.do" method="post" name="userinfo">
-    <table align="center">
-        <tr>
-            <td>用户名：</td>
-        </tr>
-        <tr>
-            <td><input type="text" name="username" placeholder="username"
-                <c:if test="${user.username!=null}">value="${user.username}" </c:if> /> </td>
-        </tr>
-        <tr>
-            <td>密码：</td>
-        </tr>
-        <tr>
-            <td><input type="password" name="password" placeholder="password"> </td>
-        </tr>
-        <%--<tr>
-            <td colspan="2"> <input type="checkbox"><span>十天内记住登录状态</span> </td>
-        </tr>--%>
-        <tr>
-            <td align="center"><input type="submit" name = "login" value="登录"></td>
-        </tr>
-    </table>
-</form>
-
+<div style="margin-left: auto;margin-right: auto;max-width: 384px;">
+<sf:form action="/login" method="post" name="userinfo" modelAttribute="user">
+    <sf:errors path="*" element="div" /><br/>
+    <div>
+        <span>用户名：</span>
+        <sf:input path="username"></sf:input>
+    </div>
+    <div>
+        <span>密码：</span>
+        <sf:password path="password"></sf:password>
+    </div>
+    <input type="submit" class="form-control" value="登录">
+</sf:form>
+</div>
 </body>
 
 </html>

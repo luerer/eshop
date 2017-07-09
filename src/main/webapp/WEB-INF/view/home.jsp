@@ -84,7 +84,7 @@
             <c:forEach items="${itemList}" var="item">
                 <div class="col-sm-3">
                     <a href="/item/${item.item_id}/detail" class="thumbnail">
-                    <img src="/img/${item.item_pic}.jpg" onerror="this.src='/img/blank.jpg'">
+                    <img src="/img/${item.item_pic}" onerror="this.src='/img/blank.jpg'">
                         ${item.item_name} ￥<fmt:formatNumber pattern=".00" value="${item.item_price}"></fmt:formatNumber>
                     </a>
                 </div>

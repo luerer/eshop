@@ -11,8 +11,7 @@ import java.util.List;
  * Created by luerer on 03/07/2017.
  */
 @Service("AdminService")
-public class AdminService {
-    @Autowired
-    IUserDao iUserDao;
+public interface AdminService {
+    public boolean checkAdmin(User user) throws Exception;
 
 }

@@ -37,42 +37,10 @@
 
     }
 
-    function updateItem(item_id) {
-        if(!window.confirm("确认修改商品？")){
-            return;
-        }
-        var item_name = document.getElementById("name_"+item_id).value;
-        var item_price = document.getElementById("price_"+item_id).value;
-        var item_stock = document.getElementById("stock_"+item_id).value;
-        var item_info = document.getElementById("info_"+item_id).value;
-        var item_type = document.getElementById("type_"+item_id).value;
-
-        var item={
-            "item_name":item_name,
-            "item_price":item_price,
-            "item_stock":item_stock,
-            "item_info":item_info,
-            "item_type":item_type,
-            "item_id":item_id,
-        };
-        $.ajax({
-            async: false,
-            url: '/seller/updateConfirm',
-            type: 'POST',
-            data: item,
-            scriptCharset: 'utf-8',
-            success: function (message) {
-                alert(message);
-                location.reload(true);
-            }
-        });
-
-
-    }
 </script>
 修改商品|<a href="/seller">返回</a>
 <hr/>
-
+<form enctype="multipart/form-data" id="addConfirm" method="post" action="/seller/updateConfirm/${item.item_id}">
 <table id="detail-panel" border="1">
     <tr>
         <td>商品名称：</td>
@@ -83,7 +51,8 @@
     <tr>
         <td>商品展示：</td>
         <td>
-            <img src="/img/${item.item_pic}.jpg" onerror="this.src='/img/blank.jpg'">
+            <img src="/img/${item.item_pic}" onerror="this.src='/img/blank.jpg'">
+            <input id="pic_info" name="pic_info" type="file" />
         </td>
     </tr>
     <tr>
@@ -119,12 +88,12 @@
     </tr>
     <tr>
         <td colspan="2">
-            <input type="submit" onclick="updateItem(${item.item_id})" value="修改商品" />
+            <input type="submit" href= value="修改商品" />
         </td>
     </tr>
 
 </table>
-
+</form>
 
 </body>
 <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>

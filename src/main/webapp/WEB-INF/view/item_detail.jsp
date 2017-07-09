@@ -166,7 +166,7 @@
                 商品展示：
             </td>
             <td>
-                <img src="/img/${item.item_pic}.jpg" onerror="this.src='/img/blank.jpg'">
+                <img src="/img/${item.item_pic}" onerror="this.src='/img/blank.jpg'">
             </td>
         </tr>
         <tr>

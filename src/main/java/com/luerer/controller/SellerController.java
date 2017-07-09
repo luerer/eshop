@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 /**
  * Created by luerer on 05/07/2017.
@@ -167,10 +167,31 @@ public class SellerController {
 
     }
 
-    @RequestMapping(value = "/updateConfirm")
-    public @ResponseBody String updateConfirm(Item item){
-        int id = item.getItem_id();
-        String old_type = iitemDao.searchById(id).getItem_type();
+    @RequestMapping(value = "/updateConfirm/{item_id}")
+    public String updateConfirm(@PathVariable int item_id, Item item,ModelMap modelMap,
+                                @RequestParam(value="pic_info",required=false) MultipartFile file,
+                                HttpServletRequest request)throws Exception{
+        item.setItem_id(item_id);
+
+        String pathRoot = request.getSession().getServletContext().getRealPath("");
+        //String pathRoot = "/Users/luerer/IdeaProjects/eshop/src/main/webapp/WEB-INF/statics/image/";
+        pathRoot+="/WEB-INF/statics/image/";
+        String path="";
+        String uuid="";
+        if(!file.isEmpty()){
+            //生成uuid作为文件名称
+            uuid = UUID.randomUUID().toString().replaceAll("-","");
+            //获得文件类型（可以判断如果不是图片，禁止上传）
+            String contentType=file.getContentType();
+            //获得文件后缀名称
+            String imageName=contentType.substring(contentType.indexOf("/")+1);
+            path=uuid+"."+imageName;
+            file.transferTo(new File(pathRoot+path));
+        }
+        item.setItem_pic(path);
+
+
+        String old_type = iitemDao.searchById(item_id).getItem_type();
         String new_type = item.getItem_type();
         try{
             if(!old_type.equals(new_type)){
@@ -185,9 +206,10 @@ public class SellerController {
             }
             iitemDao.updateItem(item);
         }catch (Exception e){
-            return "更新失败";
+            modelMap.put("errMsg","更新失败");
+            return "not_found";
         }
-        return "更新成功";
+        return "redirect:/seller";
 
     }
 
@@ -197,10 +219,30 @@ public class SellerController {
     }
 
     @RequestMapping(value = "/addConfirm")
-    public @ResponseBody String addConfirm(Item item){
+    public String addConfirm(Item item,ModelMap modelMap,
+                             @RequestParam(value="pic_info",required=false) MultipartFile file,
+                             HttpServletRequest request)throws Exception{
         if(item==null){
-            return "添加商品失败。";
+            modelMap.put("errMsg","添加商品失败。");
+            return "not_found";
         }
+
+        String pathRoot = request.getSession().getServletContext().getRealPath("");
+        //String pathRoot = "/Users/luerer/IdeaProjects/eshop/src/main/webapp/WEB-INF/statics/image/";
+        pathRoot+="/WEB-INF/statics/image/";
+        String path="";
+        String uuid="";
+        if(!file.isEmpty()){
+            //生成uuid作为文件名称
+            uuid = UUID.randomUUID().toString().replaceAll("-","");
+            //获得文件类型（可以判断如果不是图片，禁止上传）
+            String contentType=file.getContentType();
+            //获得文件后缀名称
+            String imageName=contentType.substring(contentType.indexOf("/")+1);
+            path=uuid+"."+imageName;
+            file.transferTo(new File(pathRoot+path));
+        }
+        item.setItem_pic(path);
         String item_type = item.getItem_type();
         try{
             Type type = itypeDao.searchByName(item_type);
@@ -209,9 +251,11 @@ public class SellerController {
             itypeDao.updateType(type);
             iitemDao.addItem(item);
         }catch (Exception e){
-            return "添加失败。";
+            modelMap.put("errMsg","添加失败。");
+            return "not_found";
         }
-        return "添加"+item_type+"："+item.getItem_name()+"成功。";
+
+        return "redirect:/seller";
     }
 
 

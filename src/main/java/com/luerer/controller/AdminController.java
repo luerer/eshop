@@ -4,10 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.luerer.dao.IUserDao;
 import com.luerer.model.User;
+import com.luerer.service.AdminService;
 import com.sun.org.glassfish.gmbal.ParameterNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +26,19 @@ import java.util.Map;
 public class AdminController {
     @Autowired
     IUserDao iUserDao;
+    @Autowired
+    AdminService adminService;
+
 
     @RequestMapping
     public String login_admin(HttpSession session, ModelMap modelMap){
         User user = (User) session.getAttribute("user");
+        try{
+            boolean isAdmin = adminService.checkAdmin(user);
+        }catch (Exception e){
+            modelMap.put("errMsg",e.getMessage());
+            return "not_found";
+        }
         if(user!=null && user.getId()==0 ){
             List<User> userList = null;
             try{

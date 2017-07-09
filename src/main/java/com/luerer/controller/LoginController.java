@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -15,6 +18,7 @@ import sun.tools.jconsole.HTMLPane;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +35,17 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String logincheck(HttpSession session, ModelMap modelMap,
-                             @RequestParam(value = "username", required = false) String username,
-                             @RequestParam(value = "password", required = false) String password){
+                             @Valid User user, BindingResult errors){
         //String username = request.getParameter("username");
         //String password = request.getParameter("password");
+        if(errors.hasErrors()){
+            return "login";
+        }
+        String username = user.getUsername();
+        String password = user.getPassword();
         boolean code = loginservice.login(username,password);
         if(code){
-            User user = iUserDao.searchByName(username);
+            user = iUserDao.searchByName(username);
             session.setAttribute("user",user);
             session.setAttribute("cartList",null);
             return "redirect:/home";
